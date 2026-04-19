@@ -1,0 +1,30 @@
+name: Build Jiyan Cinema APK
+on:
+  push:
+    branches:
+      - main  # أو اسم الفرع الذي تستخدمه
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 سحب الكود من المستودع
+        uses: actions/checkout@v4
+
+      - name: 🟢 إعداد بيئة Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: 🛠️ إعداد Expo و EAS
+        uses: expo/expo-github-action@v8
+        with:
+          expo-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: 📦 تثبيت المكتبات
+        run: npm install --legacy-peer-deps
+
+      - name: 🚀 بدء بناء الـ APK
+        run: eas build --platform android --profile preview --local
+
