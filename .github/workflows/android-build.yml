@@ -2,7 +2,7 @@ name: Build Jiyan Cinema APK
 on:
   push:
     branches:
-      - main  # أو اسم الفرع الذي تستخدمه
+      - main
 
 jobs:
   build:
@@ -16,6 +16,9 @@ jobs:
         with:
           node-version: 18
 
+      - name: 🛠️ تثبيت EAS CLI
+        run: npm install -g eas-cli
+
       - name: 🛠️ إعداد Expo و EAS
         uses: expo/expo-github-action@v8
         with:
@@ -27,4 +30,3 @@ jobs:
 
       - name: 🚀 بدء بناء الـ APK
         run: eas build --platform android --profile preview --local
-
